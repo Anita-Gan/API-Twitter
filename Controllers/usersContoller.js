@@ -4,21 +4,15 @@ const Users =[{
 {
     nom:'Ganene',
 },{
-    nom:'Ben'
+    age:'24'
 }]
 
-
-const getAll=(req,res)=>{
-res.render('Users',{Users})
-}
-
-
-const createTweets=(req,res)=>{
-let name=req.body
-Users.push(name)
-getAll(req,res)
+const create=(req,res)=>{
+let nom=req.Users
+Users.push(nom)
+get(req,res)
     }
 
 module.exports={
-    getAll,createTweets
+    create
 }
