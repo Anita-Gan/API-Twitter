@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon App.js",
+    "start": "nodemon App.js,/home/user-24-c1/API Twitter/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
    
   },

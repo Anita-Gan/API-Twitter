@@ -1,9 +1,14 @@
 const express = require("express");
 const router = express.Router();
+const {getAll,createTweets} = require('../Controllers/usersController.js')
 
+
+
+
+router.get("", getAll);
 
 router.get("/:id", function (req, res) {
-  res.send("salut " + req.params.id);
+  res.send("voir votre tweet " + req.params.id);
 });
 
 router.post("",createTweets);
