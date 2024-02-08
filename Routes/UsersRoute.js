@@ -1,21 +1,48 @@
 const express = require("express");
 const router = express.Router();
-const {create} = require('/home/user-24-c1/API Twitter/Controllers/usersContoller.js')
+const Users = require('/home/user-24-c1/API Twitter/Controllers/usersContoller.js');
 
 
+router.get("/", function (req, res) {
+  const { nom, prenom, age } = req.body;
+  const user = {
+    nom,
+    prenom,
+    age,
+  };
+  res.json(Users);
 
-router.get("/:id", function (req, res) {
-  res.send("voir votre tweet " );
 });
 
-router.post("", create);
+router.post("/", (req, res) => {
+  const { nom,prenom, age } = req.body;
+  const user = {
+    nom,
+    prenom,
+    age,
+  };
+  Users.push(user);
+  res.json(Users);
 
-router.put("/:id", function (req, res) {
+});
+
+router.put("/", function (req, res) {
   res.send("mettre un tweet");
 });
 
-router.delete("/:id", function (req, res) {
-  res.send("Supprimer un tweet");
+router.delete("/", function (req, res) {
+  const { nom,prenom, age } = req.body;
+  const user = {
+    nom,
+    prenom,
+    age,
+  };
+  Users.splice(user);
+  res.json(Users);
+
+
+
+ 
 });
 
 
