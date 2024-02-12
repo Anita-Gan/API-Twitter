@@ -23,7 +23,7 @@ router.post("/", (req, res) => {
   };
   Users.push(user);
   res.json(Users);
-
+  res.status(200).json
 });
 
 router.put("/", function (req, res) {
