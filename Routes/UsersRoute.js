@@ -30,14 +30,15 @@ router.put("/", function (req, res) {
   res.send("mettre un tweet");
 });
 
-router.delete("/", function (req, res) {
+router.delete("/:id", function (req, res) {
+  const id= req.params.id
   const { nom,prenom, age } = req.body;
   const user = {
     nom,
     prenom,
     age,
   };
-  Users.splice(user);
+  Users.splice(id,1);
   res.json(Users);
 
 
