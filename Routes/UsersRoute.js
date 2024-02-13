@@ -1,25 +1,43 @@
 const express = require("express");
 const router = express.Router();
 const Users = require('/home/user-24-c1/API Twitter/Controllers/usersContoller.js');
+const multer = require('multer')
 
 
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, '/home/user-24-c1/API Twitter/Myfile')
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    cb(null, file.fieldname + '-' + uniqueSuffix)
+  }
+})
+
+const upload = multer({ storage: storage })
 router.get("/", function (req, res) {
-  const { nom, prenom, age } = req.body;
+  const { userId, id, title, body, url, thumbnailUrl } = req.body;
   const user = {
-    nom,
-    prenom,
-    age,
+    userId,
+    id,
+    title,
+    body,
+    url,
+    thumbnailUrl
   };
   res.json(Users);
 
 });
 
-router.post("/", (req, res) => {
-  const { nom,prenom, age } = req.body;
+router.post("/", upload.single('avatar'),(req, res) => {
+  const { userId, id, title, body, url, thumbnailUrl } = req.body;
   const user = {
-    nom,
-    prenom,
-    age,
+    userId,
+    id,
+    title,
+    body,
+    url,
+    thumbnailUrl
   };
   Users.push(user);
   res.json(Users);
@@ -31,23 +49,19 @@ router.put("/", function (req, res) {
 });
 
 router.delete("/:id", function (req, res) {
-  const id= req.params.id
-  const { nom,prenom, age } = req.body;
+  const index= req.params.id
+  const { userId, id, title, body, url, thumbnailUrl } = req.body;
   const user = {
-    nom,
-    prenom,
-    age,
+    userId,
+    id,
+    title,
+    body,
+    url,
+    thumbnailUrl
   };
-  Users.splice(id,1);
+  Users.splice(index,1);
   res.json(Users);
-
-
-
  
 });
-
-
-
-
 
 module.exports = router;
