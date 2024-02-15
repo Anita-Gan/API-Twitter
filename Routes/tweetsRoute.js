@@ -37,7 +37,7 @@ router.post("/", upload.single('url'),(req, res) => {
     id:Tweets.length+1,
     title,
     body,
-    url: req.file.path,
+    url: req.file,
     thumbnailUrl
   };
   Tweets.push(tweet);
