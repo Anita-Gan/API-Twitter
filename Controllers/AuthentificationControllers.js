@@ -5,15 +5,16 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 
 exports.authController = async(req, res) => {
-        // const { email, name, password } = req.body;
+        const { email, name, password } = req.body;
         
-       
+        
         try {  
+          const hashedPassword = await bcrypt.hash(password, 10);
             const newUser = await prisma.user.create({
                 data: {
-                    name: req.body.name,
-                    email: req.body.email,
-                    password: req.body.password
+                    name: name,
+                    email: email,
+                    password: hashedPassword
                 },
             })
             
@@ -21,5 +22,6 @@ exports.authController = async(req, res) => {
         }
       catch(error){
         res.status(500).json({error: "error found "})
-      }  
+      }
+       
 };
