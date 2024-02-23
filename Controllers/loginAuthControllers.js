@@ -1,26 +1,28 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
-const jwt = require('jsonwebtoken')
-const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
-exports.loginAuthController = async(req, res) => {
-        const { email, name, password } = req.body;
-        
-        
-        try {  
-          const hashedPassword = await bcrypt.hash(password, 10);
-            const newUser = await prisma.user.create({
-                data: {
-                    name: name,
-                    email: email,
-                    password: hashedPassword
-                },
-            })
-            
-            res.status(200).json({ message: "utilisateur connecté" ,user: newUser});
+exports.loginAuthController = async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        const existingUser = ({
+            where: { email: email }
+        });
+
+        if (!existingUser) {
+            return res.status(404).json({ error: "Utilisateur non trouvé" });
         }
-      catch(error){
-        res.status(500).json({error: "error found "})
-      }
-       
+
+        const passwordMatch = await bcrypt.compare(password, existingUser.password);
+
+        if (!passwordMatch) {
+            return res.status(401).json({ error: "Mot de passe incorrect" });
+        }
+
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: "Une erreur s'est produite lors de l'authentification" });
+    }
 };
