@@ -4,9 +4,10 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
-const auth= require('../Controllers/AuthentificationControllers')
+const loginAuth= require('../Controllers/loginAuthControllers')
 
-router.post('/signup', auth.authController )
+
+router.post('/login', loginAuth.loginAuthController )
 
 
 module.exports = router;
